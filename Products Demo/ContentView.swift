@@ -8,9 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var products: [Product] = []
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        List {
+            ForEach(products) { product in
+                VStack {
+                    Text(product.productName)
+                        .font(.title)
+
+                    Text(product.description)
+                        .font(.subheadline)
+                }
+            }
+        }
+        .task {
+            await downloadData()
+        }
+    }
+    
+    func downloadData() async {
+        guard let url = URL(string: "https://assessment-edvora.herokuapp.com") else { print("Invalid URL"); return }
+        
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            
+            let decodedProducts = try JSONDecoder().decode([Product].self, from: data)
+            products = decodedProducts
+            
+        } catch let error {
+            print(error)
+        }
     }
 }
 

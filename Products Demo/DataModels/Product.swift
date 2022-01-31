@@ -25,7 +25,7 @@ struct Product: Codable, Identifiable {
         
         case price
         case address
-        case description
+        case description = "discription" // Spelling Error in the API JSON Data
         case date
         case time
         
