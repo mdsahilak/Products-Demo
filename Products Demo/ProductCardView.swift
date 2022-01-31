@@ -35,7 +35,7 @@ struct ProductCardView: View {
                         .font(.title3)
                     Text(product.brandName)
                         .font(.body)
-                    Text("\(product.price)")
+                    Text("$\(product.price)")
                         .font(.headline)
                 }
             }

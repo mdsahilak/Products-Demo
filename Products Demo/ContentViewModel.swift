@@ -11,6 +11,23 @@ import SwiftUI
 class ContentViewModel: ObservableObject {
     @Published var products: [Product] = []
     
+    var sections: [String] {
+        var sections: [String] = []
+        
+        for product in products {
+            if !sections.contains(product.productName) {
+                sections.append(product.productName)
+            }
+        }
+        
+        return sections
+    }
+    
+    func getProductsFor(section: String) -> [Product] {
+        let productsForSection = products.filter { $0.productName == section }
+        return productsForSection
+    }
+    
     func fetchData() async {
         guard let url = URL(string: "https://assessment-edvora.herokuapp.com") else { print("Invalid URL"); return }
         
