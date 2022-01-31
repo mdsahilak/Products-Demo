@@ -36,4 +36,39 @@ struct Product: Codable, Identifiable {
         let state: String
         let city: String
     }
+    
+    // ISO Date Formatter for JSON Data
+    let isoFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        
+        formatter.timeZone = TimeZone(abbreviation: "IST")
+        formatter.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime, .withFractionalSeconds]
+        
+        return formatter
+    }()
+    
+    // Helpers
+    var displayDate: String {
+        guard let date = isoFormatter.date(from: date) else { return "-" }
+        
+        let formatter = DateFormatter()
+        
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        
+        let displayDate = formatter.string(from: date)
+        return displayDate
+    }
+    
+    var displayTime: String {
+        guard let time = isoFormatter.date(from: time) else { return "-" }
+        
+        let formatter = DateFormatter()
+        
+        formatter.dateStyle = .none
+        formatter.timeStyle = .short
+        
+        let displayTime = formatter.string(from: time)
+        return displayTime
+    }
 }

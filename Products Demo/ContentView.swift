@@ -8,38 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var products: [Product] = []
+    @StateObject var contentVM = ContentViewModel()
     
     var body: some View {
-        List {
-            ForEach(products) { product in
-                VStack {
-                    Text(product.productName)
-                        .font(.title)
-
-                    Text(product.description)
-                        .font(.subheadline)
-                }
+        ScrollView {
+            ForEach(contentVM.products) { product in
+                ProductCardView(product: product)
             }
         }
         .task {
-            await downloadData()
+            await contentVM.fetchData()
         }
     }
     
-    func downloadData() async {
-        guard let url = URL(string: "https://assessment-edvora.herokuapp.com") else { print("Invalid URL"); return }
-        
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            
-            let decodedProducts = try JSONDecoder().decode([Product].self, from: data)
-            products = decodedProducts
-            
-        } catch let error {
-            print(error)
-        }
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
