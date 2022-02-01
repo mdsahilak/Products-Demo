@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var contentVM = ContentViewModel()
     
+    @State private var showFilterPopover = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Edvora")
@@ -19,9 +21,20 @@ struct ContentView: View {
             
             HStack(alignment: .bottom, spacing: 7) {
                 Button {
-                    
+                    showFilterPopover.toggle()
                 } label: {
-                    Text("Filters")
+                    HStack {
+                        Text("Filters")
+                        Image(systemName: "arrowtriangle.down.fill")
+                            .foregroundColor(.gray)
+                            .padding(.leading)
+                    }
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 7)
+                                .foregroundColor(.black)
+                        )
                 }
                 
                 Spacer()
@@ -29,10 +42,20 @@ struct ContentView: View {
                 Button {
                     
                 } label: {
-                    Text("Clear")
+                    Text("Clear Filters")
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 5)
+                        .background(
+                            RoundedRectangle(cornerRadius: 7)
+                                .foregroundColor(.black)
+                        )
                 }
             }
             .padding([.bottom, .horizontal])
+            .popover(isPresented: $showFilterPopover) {
+                Color(uiColor: .darkGray)
+                    .edgesIgnoringSafeArea(.all)
+            }
             
             Divider().background(Color.white)
             
@@ -63,6 +86,7 @@ struct ContentView: View {
         .foregroundColor(.white)
         .background(
             Color(uiColor: .darkGray)
+                .edgesIgnoringSafeArea(.all)
         )
     }
     
