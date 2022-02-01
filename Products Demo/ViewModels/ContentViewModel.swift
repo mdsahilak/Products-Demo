@@ -10,11 +10,15 @@ import SwiftUI
 @MainActor
 class ContentViewModel: ObservableObject {
     @Published var products: [Product] = []
+    @Published var userFilter = Filter()
     
     var sections: [String] {
         var sections: [String] = []
         
-        for product in products {
+        // apply filters (if any)
+        let filteredProducts = getFilteredProducts()
+        
+        for product in filteredProducts {
             if !sections.contains(product.productName) {
                 sections.append(product.productName)
             }
@@ -24,8 +28,40 @@ class ContentViewModel: ObservableObject {
     }
     
     func getProductsFor(section: String) -> [Product] {
-        let productsForSection = products.filter { $0.productName == section }
+        let filteredProducts = getFilteredProducts()
+        
+        let productsForSection = filteredProducts.filter { $0.productName == section }
         return productsForSection
+    }
+    
+    func getFilteredProducts() -> [Product] {
+        var filteredProducts: [Product] = products
+        
+        if !userFilter.name.isEmpty {
+            filteredProducts = filteredProducts.filter({ product in
+                userFilter.name.contains(product.productName)
+            })
+        }
+        
+        if !userFilter.states.isEmpty {
+            filteredProducts = filteredProducts.filter({ product in
+                userFilter.states.contains(product.address.state)
+            })
+        }
+        
+        if !userFilter.cities.isEmpty {
+            filteredProducts = filteredProducts.filter({ product in
+                userFilter.cities.contains(product.address.city)
+            })
+        }
+        
+        return filteredProducts
+    }
+    
+    func clearFilters() {
+        userFilter.name = []
+        userFilter.states = []
+        userFilter.cities = []
     }
     
     func fetchData() async {

@@ -40,7 +40,7 @@ struct ContentView: View {
                 Spacer()
                 
                 Button {
-                    
+                    contentVM.clearFilters()
                 } label: {
                     Text("Clear Filters")
                         .padding(.horizontal, 7)
@@ -53,11 +53,8 @@ struct ContentView: View {
             }
             .padding([.bottom, .horizontal])
             .popover(isPresented: $showFilterPopover) {
-                Color(uiColor: .darkGray)
-                    .edgesIgnoringSafeArea(.all)
+                FilterView(contentVM: contentVM)
             }
-            
-            Divider().background(Color.white)
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 7) {
@@ -66,7 +63,7 @@ struct ContentView: View {
                             .font(.title)
                             .padding()
                         
-                        Divider().background(Color.white)
+                        Divider().background(Color.white).padding(.leading)
                         
                         ScrollView(.horizontal, showsIndicators: true) {
                             HStack(alignment: .center, spacing: 7) {
