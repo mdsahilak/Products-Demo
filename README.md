@@ -2,8 +2,8 @@
 
 ### Screenshots
 
-![Screenshot 1](images/1.png)
-![Screenshot 2](images/2.png)
-![Screenshot 3](images/3.png)
-![Screenshot 4](images/4.png)
-![Screenshot 5](images/5.png)
+![Screenshot 1](Images/1.png)
+![Screenshot 2](Images/2.png)
+![Screenshot 3](Images/3.png)
+![Screenshot 4](Images/4.png)
+![Screenshot 5](Images/5.png)
