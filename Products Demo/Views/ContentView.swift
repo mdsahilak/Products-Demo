@@ -19,38 +19,11 @@ struct ContentView: View {
                 .padding()
             
             HStack(alignment: .bottom, spacing: 7) {
-                Button {
-                    showFilterPopover.toggle()
-                } label: {
-                    HStack {
-                        Text("Filters")
-                        Image(systemName: "arrowtriangle.down.fill")
-                            .foregroundColor(.gray)
-                            .padding(.leading)
-                    }
-                        .padding(.horizontal, 7)
-                        .padding(.vertical, 5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 7)
-                                .foregroundColor(.black)
-                        )
-                }
+                showFilterButton
                 
                 Spacer()
                 
-                Button {
-                    contentVM.clearFilters()
-                } label: {
-                    Text("Clear Filters")
-                        .padding(.horizontal, 7)
-                        .padding(.vertical, 5)
-                        .background(
-                            RoundedRectangle(cornerRadius: 7)
-                                .foregroundColor(.black)
-                        )
-                }
-                .disabled(contentVM.userFilter.isCleared)
-                .opacity(contentVM.userFilter.isCleared ? 0.7 : 1)
+                clearFilterButton
             }
             .padding([.bottom, .horizontal])
             .popover(isPresented: $showFilterPopover) {
@@ -86,6 +59,41 @@ struct ContentView: View {
             Color(uiColor: .darkGray)
                 .edgesIgnoringSafeArea(.all)
         )
+    }
+    
+    private var showFilterButton: some View {
+        Button {
+            showFilterPopover.toggle()
+        } label: {
+            HStack {
+                Text("Filters")
+                Image(systemName: "arrowtriangle.down.fill")
+                    .foregroundColor(.gray)
+                    .padding(.leading)
+            }
+            .padding(.horizontal, 7)
+            .padding(.vertical, 5)
+            .background(
+                RoundedRectangle(cornerRadius: 7)
+                    .foregroundColor(.black)
+            )
+        }
+    }
+    
+    private var clearFilterButton: some View {
+        Button {
+            contentVM.clearFilters()
+        } label: {
+            Text("Clear Filters")
+                .padding(.horizontal, 7)
+                .padding(.vertical, 5)
+                .background(
+                    RoundedRectangle(cornerRadius: 7)
+                        .foregroundColor(.black)
+                )
+        }
+        .disabled(contentVM.userFilter.isCleared)
+        .opacity(contentVM.userFilter.isCleared ? 0.7 : 1)
     }
     
 }

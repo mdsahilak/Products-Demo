@@ -12,18 +12,21 @@ extension ContentViewModel {
     func getFilteredProducts() -> [Product] {
         var filteredProducts: [Product] = products
         
+        // Filter out names
         if !userFilter.names.isEmpty {
             filteredProducts = filteredProducts.filter({ product in
                 userFilter.names.contains(product.productName)
             })
         }
         
+        // Filter out states
         if !userFilter.states.isEmpty {
             filteredProducts = filteredProducts.filter({ product in
                 userFilter.states.contains(product.address.state)
             })
         }
         
+        // Filter out cities
         if !userFilter.cities.isEmpty {
             filteredProducts = filteredProducts.filter({ product in
                 userFilter.cities.contains(product.address.city)
