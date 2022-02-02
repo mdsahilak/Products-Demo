@@ -31,6 +31,12 @@
 		8CCFE49927A943510056CCDF /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		8CCFE49B27A9440A0056CCDF /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		8CCFE49F27AA7D270056CCDF /* ContentViewModel+Filtering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentViewModel+Filtering.swift"; sourceTree = "<group>"; };
+		8CCFE4A127AA96710056CCDF /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		8CCFE4A327AAA1010056CCDF /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		8CCFE4A427AAA1010056CCDF /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		8CCFE4A527AAA1020056CCDF /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		8CCFE4A627AAA1020056CCDF /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
+		8CCFE4A827AAA1020056CCDF /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +53,8 @@
 		8C34713B27A7F2C700A0C000 = {
 			isa = PBXGroup;
 			children = (
+				8CCFE4A227AA96B40056CCDF /* Images */,
+				8CCFE4A127AA96710056CCDF /* README.md */,
 				8C34714627A7F2C700A0C000 /* Products Demo */,
 				8C34714527A7F2C700A0C000 /* Products */,
 			);
@@ -107,6 +115,18 @@
 				8C34715A27A82C1100A0C000 /* ProductCardView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8CCFE4A227AA96B40056CCDF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				8CCFE4A827AAA1020056CCDF /* 1.png */,
+				8CCFE4A327AAA1010056CCDF /* 2.png */,
+				8CCFE4A427AAA1010056CCDF /* 3.png */,
+				8CCFE4A527AAA1020056CCDF /* 4.png */,
+				8CCFE4A627AAA1020056CCDF /* 5.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
