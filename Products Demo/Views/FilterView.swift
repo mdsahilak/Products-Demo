@@ -26,12 +26,12 @@ struct FilterView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         ForEach(names, id: \.self) { name in
                             Button {
-                                contentVM.userFilter.toggleProductName(name)
+                                contentVM.toggleNameFilter(name)
                             } label: {
                                 Text(name)
                                     .font(.headline)
                                     .padding().padding(.leading)
-                                    .foregroundColor(contentVM.userFilter.name.contains(name) ? .blue : .black)
+                                    .foregroundColor(contentVM.userFilter.names.contains(name) ? .blue : .black)
                             }
                             
                         }
@@ -45,7 +45,7 @@ struct FilterView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         ForEach(states, id: \.self) { state in
                             Button {
-                                contentVM.userFilter.toggleState(state)
+                                contentVM.toggleStateFilter(state)
                             } label: {
                                 Text(state)
                                     .font(.headline)
@@ -64,7 +64,7 @@ struct FilterView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         ForEach(cities, id: \.self) { city in
                             Button {
-                                contentVM.userFilter.toggleCity(city)
+                                contentVM.toggleCityFilter(city)
                             } label: {
                                 Text(city)
                                     .font(.headline)
@@ -85,27 +85,30 @@ struct FilterView: View {
         
     }
     
+    // Names for the Product Section
     private var names: [String] {
         let allProductNames = Set(contentVM.products.map { $0.productName })
         
         return allProductNames.sorted()
     }
     
+    // States for the State Section
     private var states: [String] {
-        if contentVM.userFilter.name.isEmpty {
+        if contentVM.userFilter.names.isEmpty {
             let allStates = Set(contentVM.products.map { $0.address.state })
             
             return allStates.sorted()
         } else {
-            let productsSelectedWithName = contentVM.products.filter { contentVM.userFilter.name.contains($0.productName) }
+            let productsSelectedWithName = contentVM.products.filter { contentVM.userFilter.names.contains($0.productName) }
             let statesFromSelectedNames = Set(productsSelectedWithName.map { $0.address.state } )
             
             return statesFromSelectedNames.sorted()
         }
     }
     
+    // Cities for the City Section
     private var cities: [String] {
-        if contentVM.userFilter.name.isEmpty {
+        if contentVM.userFilter.names.isEmpty {
             if contentVM.userFilter.states.isEmpty {
                 let allCities = Set(contentVM.products.map { $0.address.city })
                 
@@ -118,7 +121,7 @@ struct FilterView: View {
             }
             
         } else {
-            let productsSelectedWithName = contentVM.products.filter { contentVM.userFilter.name.contains($0.productName) }
+            let productsSelectedWithName = contentVM.products.filter { contentVM.userFilter.names.contains($0.productName) }
             
             if contentVM.userFilter.states.isEmpty {
                 let allCitiesForSelectedNames = Set(productsSelectedWithName.map { $0.address.city } )
