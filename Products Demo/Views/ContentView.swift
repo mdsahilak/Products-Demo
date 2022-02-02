@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var contentVM = ContentViewModel()
-    
     @State private var showFilterPopover = false
     
     var body: some View {
