@@ -8,73 +8,111 @@
 import SwiftUI
 
 struct FilterView: View {
+    @Environment(\.presentationMode) var presentationMode
     @ObservedObject var contentVM: ContentViewModel
     
+    @State private var showProducts = false
+    @State private var showStates = false
+    @State private var showCities = false
+    
     var body: some View {
-        VStack {
-            Text("Filter")
-                .font(.title3)
-                .padding()
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Filters")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .foregroundColor(.gray)
+                    
+                Spacer()
+                
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Done")
+                        .font(.body)
+                        .foregroundColor(.white)
+                }
+            }
+            .padding([.top, .horizontal])
+            
+            Divider().background(Color.white)
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Products")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .padding()
-                    Divider()
+                    
+                    Button {
+                        withAnimation(.spring()) {
+                            showProducts.toggle()
+                        }
+                    } label: {
+                        headingButtonLabel(heading: "Products", showItems: showProducts)
+                    }
+                    .padding()
+                    
                     VStack(alignment: .leading, spacing: 5) {
-                        ForEach(names, id: \.self) { name in
-                            Button {
-                                contentVM.toggleNameFilter(name)
-                            } label: {
-                                Text(name)
-                                    .font(.headline)
-                                    .padding().padding(.leading)
-                                    .foregroundColor(contentVM.userFilter.names.contains(name) ? .blue : .black)
+                        if showProducts {
+                            ForEach(names, id: \.self) { name in
+                                Button {
+                                    contentVM.toggleNameFilter(name)
+                                } label: {
+                                    ItemButtonLabel(title: name, selected: contentVM.userFilter.names.contains(name))
+                                }
+                                .padding(.horizontal)
+                                .padding(.leading)
                             }
-                            
                         }
                     }
                     
-                    Text("State")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .padding()
-                    Divider()
+                    Button {
+                        withAnimation(.spring()) {
+                            showStates.toggle()
+                        }
+                    } label: {
+                        headingButtonLabel(heading: "State", showItems: showStates)
+                    }
+                    .padding()
+                    
                     VStack(alignment: .leading, spacing: 5) {
-                        ForEach(states, id: \.self) { state in
-                            Button {
-                                contentVM.toggleStateFilter(state)
-                            } label: {
-                                Text(state)
-                                    .font(.headline)
-                                    .padding().padding(.leading)
-                                    .foregroundColor(contentVM.userFilter.states.contains(state) ? .blue : .black)
+                        if showStates {
+                            ForEach(states, id: \.self) { state in
+                                Button {
+                                    contentVM.toggleStateFilter(state)
+                                } label: {
+                                    ItemButtonLabel(title: state, selected: contentVM.userFilter.states.contains(state))
+                                }
+                                .padding(.horizontal)
+                                .padding(.leading)
                             }
-
                         }
                     }
                     
-                    Text("City")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .padding()
-                    Divider()
+                    Button {
+                        withAnimation(.spring()) {
+                            showCities.toggle()
+                        }
+                    } label: {
+                        headingButtonLabel(heading: "City", showItems: showCities)
+                    }
+                    .padding()
+                    
                     VStack(alignment: .leading, spacing: 5) {
-                        ForEach(cities, id: \.self) { city in
-                            Button {
-                                contentVM.toggleCityFilter(city)
-                            } label: {
-                                Text(city)
-                                    .font(.headline)
-                                    .padding().padding(.leading)
-                                    .foregroundColor(contentVM.userFilter.cities.contains(city) ? .blue : .black)
+                        if showCities {
+                            ForEach(cities, id: \.self) { city in
+                                Button {
+                                    contentVM.toggleCityFilter(city)
+                                } label: {
+                                    ItemButtonLabel(title: city, selected: contentVM.userFilter.cities.contains(city))
+                                }
+                                .padding(.horizontal)
+                                .padding(.leading)
                             }
-
                         }
                     }
                 }
+                
+                clearFiltersButton()
+                    .padding()
+                
             }
             
         }
@@ -83,6 +121,59 @@ struct FilterView: View {
                 .edgesIgnoringSafeArea(.all)
         }
         
+    }
+    
+    private func headingButtonLabel(heading: String, showItems: Bool) -> some View {
+        HStack {
+            Text(heading)
+                .font(.title3)
+                .fontWeight(.semibold)
+            
+            Spacer()
+            
+            Image(systemName: "arrowtriangle.down.fill")
+                .rotationEffect(showItems ? .zero : .degrees(90))
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 7)
+                .foregroundColor(.black)
+        )
+    }
+    
+    private func ItemButtonLabel(title: String, selected: Bool) -> some View {
+        HStack {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(selected ? .green : .white)
+            
+            Spacer()
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 7)
+                .foregroundColor(.black)
+        )
+    }
+    
+    private func clearFiltersButton() -> some View {
+        Button {
+            contentVM.clearFilters()
+        } label: {
+            HStack {
+                Text("Clear Filters")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 7)
+                    .foregroundColor(.black)
+            )
+        }
+        .disabled(contentVM.userFilter.isCleared)
+        .opacity(contentVM.userFilter.isCleared ? 0.7 : 1)
+
     }
     
     // Names for the Product Section

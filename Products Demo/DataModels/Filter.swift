@@ -13,4 +13,13 @@ struct Filter {
     var states: Set<String> = []
     var cities: Set<String> = []
     
+    var isCleared: Bool {
+        names.isEmpty && states.isEmpty && cities.isEmpty
+    }
+    
+    mutating func clear() {
+        names = []
+        states = []
+        cities = []
+    }
 }

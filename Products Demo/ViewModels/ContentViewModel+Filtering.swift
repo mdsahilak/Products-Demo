@@ -5,7 +5,7 @@
 //  Created by Muhammed Sahil Arayakandy on 02/02/22.
 //
 
-import Foundation
+import SwiftUI
 
 extension ContentViewModel {
     // Get the Product Items with Filter Applied
@@ -88,9 +88,10 @@ extension ContentViewModel {
         // Lowest level filter, so there are no dependent filters
     }
     
+    // Clear Filters
     func clearFilters() {
-        userFilter.names = []
-        userFilter.states = []
-        userFilter.cities = []
+        withAnimation(.spring()) {
+            userFilter.clear()
+        }
     }
 }

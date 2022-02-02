@@ -49,6 +49,8 @@ struct ContentView: View {
                                 .foregroundColor(.black)
                         )
                 }
+                .disabled(contentVM.userFilter.isCleared)
+                .opacity(contentVM.userFilter.isCleared ? 0.7 : 1)
             }
             .padding([.bottom, .horizontal])
             .popover(isPresented: $showFilterPopover) {
